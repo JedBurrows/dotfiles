@@ -1,0 +1,23 @@
+# Never manage omarchy: it is theme machinery omarchy regenerates per machine,
+# and it carries binary wallpaper/preview assets. Ignored on all machines.
+.config/omarchy
+
+# Editor / migration backup files — never track on any machine.
+**/*.bak
+**/*.bak.*
+
+{{- /* Desktop-only configs: ignored (not applied) on non-desktop machines. */ -}}
+{{ if not .desktop }}
+.config/hypr
+.config/waybar
+.config/mako
+.config/walker
+.config/alacritty
+.config/swayosd
+.config/fastfetch
+.config/fontconfig
+.config/uwsm
+.config/chromium-flags.conf
+.config/mimeapps.list
+.config/user-dirs.dirs
+{{ end }}

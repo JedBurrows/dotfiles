@@ -1,0 +1,5 @@
+{{- /* Prompt once for whether this machine is the Linux (Hyprland) desktop. */ -}}
+{{- $desktop := promptBoolOnce . "desktop" "Track desktop-only configs (Hyprland machine)" -}}
+
+[data]
+    desktop = {{ $desktop }}

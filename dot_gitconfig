@@ -1,0 +1,14 @@
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+[pull]
+	rebase = true
+[init]
+	defaultBranch = master
+[user]
+	name = Jed Burrows
+	email = jedburrows1997@gmail.com
+[core]
+	autocrlf = input

@@ -1,0 +1,32 @@
+# Defensive deny-list — belt-and-suspenders.
+# This chezmoi source only tracks an explicit allowlist, but never let any of
+# the following be committed even if added by mistake or by tooling.
+
+# --- Sensitive application data directories ---
+Signal/
+chromium/
+chrome/
+pulse/
+ibus/
+dconf/
+systemd/
+fcitx*/
+
+# --- Credentials / browser state / databases ---
+Cookies*
+Login Data*
+Web Data*
+Local State
+History
+*.sqlite
+*.sqlite-*
+*.ldb
+
+# --- Caches and volatile state ---
+*Cache*
+logs/
+*.log
+
+# --- Editor / migration backups ---
+*.bak
+*.bak.*
