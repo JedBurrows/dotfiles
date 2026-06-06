@@ -1,0 +1,50 @@
+{{- /* per-machine accent: purple=home, blue=work, red=servers */ -}}
+{{- $accent := "#d3869b" -}}
+{{- if eq .chezmoi.hostname "WORK_HOSTNAME_TODO" }}{{ $accent = "#83a598" }}{{ end -}}
+{{- /* example for future servers:
+{{- if eq .chezmoi.hostname "homelab-01" }}{{ $accent = "#fb4934" }}{{ end -}} */ -}}
+
+# ============ core ============
+set -g prefix C-Space
+unbind C-b
+bind C-Space send-prefix
+set -g prefix2 C-b
+set -g mouse on
+set -g base-index 1
+setw -g pane-base-index 1
+set -g renumber-windows on
+set -g history-limit 50000
+set -s escape-time 0
+set -g focus-events on
+set -g default-terminal "tmux-256color"
+set -as terminal-features ",alacritty:RGB"
+setw -g mode-keys vi
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+
+# ============ plugins ============
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'christoomey/vim-tmux-navigator'
+
+# ============ gruvbox rice (hand-rolled) ============
+set -g status-position top
+set -g status-interval 5
+set -g status-justify left
+set -g status-style "bg=#3c3836,fg=#ebdbb2"
+
+set -g status-left-length 100
+set -g status-left "#[fg=#282828,bg=#d79921,bold]  #S #[fg=#d79921,bg=#3c3836]"
+
+set -g window-status-separator ""
+set -g window-status-format "#[fg=#a89984,bg=#3c3836]  #I:#W "
+set -g window-status-current-format "#[fg=#3c3836,bg=#689d6a]#[fg=#282828,bg=#689d6a,bold] #I:#W #[fg=#689d6a,bg=#3c3836]"
+
+set -g status-right-length 100
+set -g status-right "#[fg=#504945,bg=#3c3836]#[fg=#ebdbb2,bg=#504945]  %H:%M · %d %b #[fg={{ $accent }},bg=#504945]#[fg=#282828,bg={{ $accent }},bold]  #h "
+
+set -g pane-border-style "fg=#504945"
+set -g pane-active-border-style "fg=#689d6a"
+set -g message-style "bg=#d79921,fg=#282828"
+set -g mode-style "bg=#83a598,fg=#282828"
+
+run '~/.tmux/plugins/tpm/tpm'
