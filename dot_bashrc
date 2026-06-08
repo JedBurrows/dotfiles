@@ -4,6 +4,8 @@
 if [[ -f ~/.local/share/omarchy/default/bash/rc ]]; then
   source ~/.local/share/omarchy/default/bash/rc
 else
+  export EDITOR=vim
+
   # ============ envs ============
   export SUDO_EDITOR="$EDITOR"
   export BAT_THEME=ansi
@@ -63,7 +65,7 @@ else
   fi
 
   open() (
-    xdg-open "$@" >/dev/null 2>&1 &
+    xdg-open "$@" > /dev/null &
   )
 
   alias ..='cd ..'
@@ -180,17 +182,20 @@ else
   }
 
   gd() {
-    if gum confirm "Remove worktree and branch?"; then
-      local cwd base branch root worktree
-      cwd="$(pwd)"
-      worktree="$(basename "$cwd")"
-      root="${worktree%%--*}"
-      branch="${worktree#*--}"
-      if [[ "$root" != "$worktree" ]]; then
-        cd "../$root"
-        git worktree remove "$cwd" --force || return 1
-        git branch -D "$branch"
-      fi
+    local cwd root branch worktree
+    cwd="$(pwd)"
+    worktree="$(basename "$cwd")"
+    root="${worktree%%--*}"
+    branch="${worktree#*--}"
+    if [[ "$root" == "$worktree" ]]; then
+      echo "Not in a worktree directory (expected name pattern: repo--branch)"
+      return 1
+    fi
+    read -rp "Remove worktree and branch '$branch'? [y/N] " confirm
+    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+      cd "../$root"
+      git worktree remove "$cwd" --force || return 1
+      git branch -D "$branch"
     fi
   }
 
@@ -220,10 +225,6 @@ else
   }
 
   # ============ init ============
-  if command -v mise &> /dev/null; then
-    eval "$(mise activate bash)"
-  fi
-
   if [[ $- == *i* ]] && [[ ${TERM:-} != "dumb" ]] && command -v starship &> /dev/null; then
     eval "$(starship init bash)"
   fi
@@ -245,7 +246,9 @@ export EDITOR=vim
 
 export PATH="$HOME/.local/bin:$PATH"
 
-eval "$(mise activate bash)"
+if command -v mise &> /dev/null; then
+  eval "$(mise activate bash)"
+fi
 
 # pnpm
 export PNPM_HOME="/home/jed/.local/share/pnpm"
