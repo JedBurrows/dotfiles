@@ -6,6 +6,10 @@
 **/*.bak
 **/*.bak.*
 
+# Repo-only files — documentation, never deploy into $HOME.
+README.md
+docs
+
 {{- /* Desktop-only configs: ignored (not applied) on non-desktop machines. */ -}}
 {{ if not .desktop }}
 .config/hypr
@@ -20,4 +24,15 @@
 .config/chromium-flags.conf
 .config/mimeapps.list
 .config/user-dirs.dirs
+
+# Omarchy theme integration: live symlinks into ~/.config/omarchy + hot-reload
+# machinery. Non-desktop machines use static-theme.lua / btop builtin instead.
+.config/nvim/lua/plugins/theme.lua
+.config/nvim/lua/plugins/omarchy-theme-hotreload.lua
+.config/btop/themes/current.theme
+{{ end }}
+
+{{- /* Static theme fallback: only applied on non-desktop (omarchy provides its own). */ -}}
+{{ if .desktop }}
+.config/nvim/lua/plugins/static-theme.lua
 {{ end }}
