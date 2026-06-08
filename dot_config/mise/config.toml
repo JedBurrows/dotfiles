@@ -4,4 +4,34 @@ idiomatic_version_file_enable_tools = ["ruby"]
 [settings.ruby]
 
 [tools]
+# --- runtimes ---
 node = "24.14.0"
+
+# --- CLI power tools (prebuilt binaries via mise's registry) ---
+# Pinned here so a fresh machine (Arch or WSL Ubuntu) bootstraps the same
+# toolkit with a single `mise install`. On Arch these may also exist via
+# pacman; mise's shims take PATH precedence, giving identical versions
+# everywhere. Prune anything you'd rather leave to the system package manager.
+ripgrep  = "latest"   # rg   — content search
+fd       = "latest"   # find replacement
+fzf      = "latest"   # fuzzy finder
+bat      = "latest"   # cat with syntax highlighting
+eza      = "latest"   # ls replacement
+zoxide   = "latest"   # smart cd
+lazygit  = "latest"   # git TUI
+delta    = "latest"   # better git diffs
+gum      = "latest"   # interactive shell-script prompts
+starship = "latest"   # prompt
+jq       = "latest"   # JSON
+yq       = "latest"   # YAML
+
+# --- optional extras (uncomment to opt in) ---
+# atuin       = "latest"  # supercharged shell history
+# yazi        = "latest"  # TUI file manager
+# dust        = "latest"  # du replacement
+# duf         = "latest"  # df replacement
+# procs       = "latest"  # ps replacement
+# sd          = "latest"  # sed for humans
+# hyperfine   = "latest"  # command benchmarking
+# difftastic  = "latest"  # structural (AST) diffs
+# glow        = "latest"  # render markdown
