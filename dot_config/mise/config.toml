@@ -12,6 +12,7 @@ node = "24.14.0"
 # toolkit with a single `mise install`. On Arch these may also exist via
 # pacman; mise's shims take PATH precedence, giving identical versions
 # everywhere. Prune anything you'd rather leave to the system package manager.
+neovim   = "latest"
 ripgrep  = "latest"   # rg   — content search
 fd       = "latest"   # find replacement
 fzf      = "latest"   # fuzzy finder
